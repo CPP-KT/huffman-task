@@ -15,3 +15,7 @@ CMakeFiles/
 cmake-build*
 cmake_install.cmake
 Makefile
+
+# vcpkg
+vcpkg_installed/
+vcpkg-manifest-install.log
