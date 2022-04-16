@@ -1,11 +1,17 @@
 cmake_minimum_required(VERSION 3.21)
-project(template)
+project(huffman)
 
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(GTest REQUIRED)
+# NOTE: feel free to add any library
 
-add_executable(tests tests.cpp)
+include_directories(library)
+
+add_subdirectory(library)
+add_subdirectory(tool)
+
+add_executable(tests unit-tests/tests.cpp)
 
 if (NOT MSVC)
   target_compile_options(tests PRIVATE -Wall -Wno-sign-compare -pedantic)
@@ -25,4 +31,5 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
   target_compile_options(tests PUBLIC -D_GLIBCXX_DEBUG)
 endif()
 
-target_link_libraries(tests GTest::gtest GTest::gtest_main)
+target_link_libraries(huffman-tool huffman-lib)
+target_link_libraries(tests GTest::gtest GTest::gtest_main huffman-lib)
