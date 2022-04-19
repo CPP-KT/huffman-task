@@ -19,3 +19,7 @@ Makefile
 # vcpkg
 vcpkg_installed/
 vcpkg-manifest-install.log
+
+#python
+__pycache__/
+.pytest_cache/

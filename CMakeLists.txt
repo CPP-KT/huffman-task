@@ -4,12 +4,9 @@ project(huffman)
 set(CMAKE_CXX_STANDARD 17)
 
 find_package(GTest REQUIRED)
-# NOTE: feel free to add any library
 
-include_directories(library)
-
-add_subdirectory(library)
-add_subdirectory(tool)
+# NOTE: huffman functional must be implemented as library and linked to the executables
+# NOTE: tool target name must be huffman-tool
 
 add_executable(tests unit-tests/tests.cpp)
 
@@ -31,5 +28,4 @@ if (CMAKE_BUILD_TYPE MATCHES "Debug")
   target_compile_options(tests PUBLIC -D_GLIBCXX_DEBUG)
 endif()
 
-target_link_libraries(huffman-tool huffman-lib)
-target_link_libraries(tests GTest::gtest GTest::gtest_main huffman-lib)
+target_link_libraries(tests GTest::gtest GTest::gtest_main)

@@ -19,6 +19,7 @@ def file_checksum(filename):
 def create_command(args, profiling=False):
     # TODO windows?
     command = ['time', '-f', '%e'] if profiling else []
+    # TODO find an executable with this name
     command += [os.path.join('.', 'cmake-build-Release', 'tool', 'huffman-tool')] + args
     return command
 
@@ -49,18 +50,14 @@ class TestCaseBase(unittest.TestCase):
 
         command = create_command(['--{}'.format(mode), '-i', fi, '-o', fo], profiling=profiling)
 
-        elapses = []
-        for i in range(1):
-            output, return_code = run_command(command)
-            # print(output)
-            # print(return_code)
-            self.assertNotEqual(expect_error, return_code == 0, 'Program exit code did not match expected')
+        output, return_code = run_command(command)
+        # print(output)
+        # print(return_code)
+        self.assertNotEqual(expect_error, return_code == 0, 'Program exit code did not match expected')
 
-            if profiling:
-                elapsed = float(output.split(b'\n')[-2])  # TODO: guaranteed?
-                elapses.append(elapsed)
-                self.assertLessEqual(elapsed, limit, 'Command in {} mode took too much time'.format(mode))
-        # print("Sample solution:", mode, sum(elapses) / len(elapses))
+        if profiling:
+            elapsed = float(output.split(b'\n')[-2])  # TODO: guaranteed?
+            self.assertLessEqual(elapsed, limit, 'Command in {} mode took too much time'.format(mode))
 
         if not expect_error:
             self.assertTrue(os.path.exists(fo), 'Output file in {} mode was not created'.format(mode))

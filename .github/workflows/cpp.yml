@@ -51,4 +51,5 @@ jobs:
     - if: ${{ matrix.build_type == 'Release' }}
       name: Integration tests
       run: |
-        python3 -m unittest integration-tests/tests.py
+        useradd noperms
+        runuser -u noperms -- python3 -m unittest integration-tests/tests.py
