@@ -1,3 +1,4 @@
+import sys
 import tempfile
 import unittest
 import os
@@ -6,6 +7,13 @@ import hashlib
 
 
 TESTS_DIR = os.path.join(os.getcwd(), 'integration-tests', 'data')
+
+
+def find_tool():
+    name = 'huffman-tool' if sys.platform.lower() != 'windows' else 'huffman-tool.exe'
+    for root, dirs, files in os.walk(os.getcwd()):
+        if name in files:
+            return os.path.join(root, name)
 
 
 def file_checksum(filename):
@@ -19,8 +27,9 @@ def file_checksum(filename):
 def create_command(args, profiling=False):
     # TODO windows?
     command = ['time', '-f', '%e'] if profiling else []
+
     # TODO find an executable with this name
-    command += [os.path.join('.', 'cmake-build-Release', 'tool', 'huffman-tool')] + args
+    command += [find_tool()] + args
     return command
 
 
