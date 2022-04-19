@@ -48,7 +48,7 @@ class TestCaseBase(unittest.TestCase):
             more_args = []
         fi, fo = (self.orig, self.comp) if (mode == 'compress') else (self.comp, self.decomp)
 
-        command = create_command(['--{}'.format(mode), '-i', fi, '-o', fo], profiling=profiling)
+        command = create_command(['--{}'.format(mode), '-i', fi, '-o', fo], profiling=profiling) + more_args
 
         output, return_code = run_command(command)
         # print(output)
