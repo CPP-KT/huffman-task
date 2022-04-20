@@ -258,13 +258,13 @@ class TestRandomDirectories(unittest.TestCase):
                 comp = path + '.huf'
                 decomp = path + '.dehuf'
 
-                command = create_command(['--compress', '-i', path, '-o', comp])
+                command = create_command(['--compress', '--input', path, '--output', comp])
                 _, rc = run_command(command)
                 if rc != 0:
                     continue
                 self.assertTrue(os.path.exists(comp), 'Output compressed file not created')
 
-                command = create_command(['--decompress', '-i', comp, '-o', decomp])
+                command = create_command(['--decompress', '--input', comp, '--output', decomp])
                 _, rc = run_command(command)
                 self.assertEqual(rc, 0, 'Return code of decompress is not zero, while compress succeeded')
                 self.assertTrue(os.path.exists(decomp), 'Output decompressed file not created')
