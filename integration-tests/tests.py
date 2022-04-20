@@ -57,7 +57,7 @@ class TestCaseBase(unittest.TestCase):
             more_args = []
         fi, fo = (self.orig, self.comp) if (mode == 'compress') else (self.comp, self.decomp)
 
-        command = create_command(['--{}'.format(mode), '-i', fi, '-o', fo], profiling=profiling) + more_args
+        command = create_command(['--{}'.format(mode), '--input', fi, '--output', fo], profiling=profiling) + more_args
 
         output, return_code = run_command(command)
         # print(output)
@@ -116,6 +116,7 @@ class TestSimpleFile(TestCaseBase):
 
     def test_wrong_args(self):
         self.run_tool('compress', more_args=['1337'], expect_error=True)
+        self.run_tool('compress', more_args=['--decompress'], expect_error=True)
 
 
 class TestRealFile(TestCaseBase):
